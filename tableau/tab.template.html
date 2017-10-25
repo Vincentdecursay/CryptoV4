@@ -1,0 +1,100 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+
+
+      <!--Sidebar content-->
+            <p>
+             Search:
+             <input ng-model="$ctrl.query">
+           </p>
+
+           <p>
+             Sort by:
+             <select ng-model="$ctrl.orderProp">
+               <option value="name">Nom</option>
+               <option value="price">Total investi</option>
+             </select>
+           </p>
+
+    </div>
+    <div class="col-md-10">
+      <!--Body content-->
+      <table>
+        <tr>
+          <td>Logo</td>
+          <td>Nom</td>
+          <td>prix achat</td>
+          <td>Quantite</td>
+          <td>Capital investit</td>
+          <td>prix actuel</td>
+          <td>Capital actuel</td>
+          <td>Profit</td>
+        </tr>
+
+        <tr ng-if="crypto.etat==1" ng-repeat="(key, crypto) in $ctrl.list| filter:$ctrl.query | orderBy:$ctrl.orderProp ">
+
+          <td><a href="#/crypto/{{crypto.name}}" class="thumb">
+      <img width="100" height="100" ng-src="{{crypto.imageUrl}}"/>
+      </a>
+          </td>
+
+
+          <td><a href="#/monnaie/{{crypto.name}}">{{crypto.name}}</a></td>
+          <td>{{crypto.price}}</td>
+          <td>{{crypto.quantity}}</td>
+          <td>{{crypto.quantity * crypto.price}}</td>
+          <td><input type="text" name="valeur_actu"
+             ng-model="valeur"
+             ng-model-options="{ getterSetter: true }" /></td>
+          <td>{{crypto.quantity * valeur}}</td>
+          <td>{{- ((crypto.quantity * crypto.price) - (valeur * crypto.quantity))}}</td>
+          <!--<td><button ng-click="$ctrl.delCrypto(crypto.etat)">del</button></td> -->
+          <td><button ng-click="crypto.etat=0">del</button></td>
+        </tr>
+
+        <tr ng-if="crypto.etat==0" ng-repeat="(key, crypto) in $ctrl.list| filter:$ctrl.query | orderBy:$ctrl.orderProp ">
+
+          <td><a href="#/crypto/{{crypto.name}}" class="thumb">
+      <img width="100" height="100" ng-src="{{crypto.imageUrl}}"/>
+      </a>
+          </td>
+
+
+          <td><a href="#/monnaie/{{crypto.name}}">{{crypto.name}}</a></td>
+          <td><red>{{crypto.price}}</red></td>
+          <td><red>{{crypto.quantity}}</red></td>
+          <td><red>{{crypto.quantity * crypto.price}}</red></td>
+          <td><input type="text" name="valeur_actu"
+             ng-model="valeur"
+             ng-model-options="{ getterSetter: true }" /></td>
+          <td><red>{{crypto.quantity * valeur}}</red></td>
+          <td><red>{{- ((crypto.quantity * crypto.price) - (valeur * crypto.quantity))}}</i></td>
+          <td><button ng-click="crypto.etat=1">retour</button></td>
+          <td><button ng-click="$ctrl.deldefCrypto(key)">del def</button></td>
+
+        </tr>
+
+
+
+       <tr>
+         <td>"image"</td>
+         <td><input type="text" name="nom" ng-model="$ctrl.name" /></td>
+         <td><input type="text" name="prix_achat" ng-model="$ctrl.price" /></td>
+         <td><input type="text" name="quantite" ng-model="$ctrl.quantity" /></td>
+
+
+      <td>
+        <button ng-click="$ctrl.createCrypto()">enregistrer</button>
+
+      </td>
+
+       </tr>
+
+
+      </table>
+
+
+    </div>
+  </div>
+</div>
